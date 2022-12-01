@@ -6,12 +6,21 @@ const https = require('node:https');
 const app = express();
 const requestIp = require('request-ip');
 const ipDB = require('./models/ip');
+const PORT = 3000 || process.env.PORT;
 app.set("view engine","ejs");
-mongoose.connect(process.env.DB_URI, {
-    useNewUrlParser: true, useUnifiedTopology: true
-  })
+// mongoose.connect(process.env.DB_URI, {
+//     useNewUrlParser: true, useUnifiedTopology: true
+//   })
 
-
+const connectDB = async () => {
+try {
+    const conn = await mongoose.connect(process.env.DB_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+} catch (error) {
+    console.log(error);
+    process.exit(1);
+}
+}
 app.use(requestIp.mw({ attributeName : 'clientIp' }));
 app.get("/",async function(req,res){
     var ip = "8.8.8.8";
@@ -45,6 +54,8 @@ app.get("/",async function(req,res){
 
 
 
-app.listen(3000, function () {
-    console.log('Server is running on port 3000')
-    });
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+})
