@@ -17,9 +17,8 @@
 
 
 ## Screenshots
-<p align="center>
-  <img src="https://github.com/omkarae/visitor-profile/blob/main/1.png" alt="UI" height=200px></img>
-</p>
+<img src="https://github.com/omkarae/visitor-profile/blob/main/1.png" alt="UI" height=200px></img>
+
 
 
 
